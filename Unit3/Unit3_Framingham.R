@@ -39,3 +39,7 @@ table(test$TenYearCHD, predictTest > 0.5)
 library(ROCR)
 ROCRpred = prediction(predictTest, test$TenYearCHD)
 as.numeric(performance(ROCRpred, "auc")@y.values)
+
+# Quick question
+sensitivity = 11/(187+11)
+specificity = 1069/(1069+6)
