@@ -35,3 +35,4 @@ accuracy = (confusion_matrix[1,1] + confusion_matrix[2,2]) / nrow(songs_test)
 baseline_accuracy = (nrow(songs_test) - sum(songs_test$Top10)) / nrow(songs_test)
 sensitivity = confusion_matrix[2,2] / sum(confusion_matrix[2,])
 specificity = confusion_matrix[1,1] / sum(confusion_matrix[1,])
+
