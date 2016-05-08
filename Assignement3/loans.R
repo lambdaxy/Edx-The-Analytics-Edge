@@ -34,3 +34,13 @@ max(predictions)
 confusion_matrix = table(test$not.fully.paid, predictions >= 0.5)
 auc = performance(prediction(predictions, test$not.fully.paid),"auc")
 auc <- as.numeric(auc@y.values)
+
+test$profit = exp(test$int.rate*3) - 1
+test$profit[test$not.fully.paid == 1] = -1
+max(test$profit)*10
+high_interest = test[test$int.rate >= 0.15,]
+mean(high_interest$profit)
+
+cutoff = sort(high_interest$predicted.risk, decreasing=FALSE)[100]
+selected_loans = high_interest[high_interest$predicted.risk <= cutoff,]
+sum(selected_loans$not.fully.paid)
