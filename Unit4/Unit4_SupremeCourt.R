@@ -40,7 +40,11 @@ pred = prediction(PredictROC[,2], Test$Reverse)
 perf = performance(pred, "tpr", "fpr")
 plot(perf)
 
+auc = as.numeric(performance(pred, "auc")@y.values)
 
+StevensTree = rpart(Reverse ~ Circuit + Issue + Petitioner + Respondent + LowerCourt + Unconst, data = Train, method="class", minbucket=5)
+                    
+prp(StevensTree)
 
 # VIDEO 5 - Random Forests
 
