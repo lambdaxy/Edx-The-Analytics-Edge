@@ -92,3 +92,5 @@ PredictCV = predict(StevensTreeCV, newdata = Test, type = "class")
 table(Test$Reverse, PredictCV)
 (59+64)/(59+18+29+64)
 
+prp(StevensTreeCV)
+
