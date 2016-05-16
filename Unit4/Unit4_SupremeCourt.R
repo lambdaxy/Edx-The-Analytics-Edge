@@ -67,7 +67,7 @@ PredictForest = predict(StevensForest, newdata = Test)
 table(Test$Reverse, PredictForest)
 (40+74)/(40+37+19+74)
 
-
+set.seed(200)
 
 # VIDEO 6
 
