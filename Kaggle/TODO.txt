@@ -1,0 +1,5 @@
+TODO
+
+* Try imputting missing values with mice.
+* Check how many rows are complete
+* Clustering then predict based on clusters?
