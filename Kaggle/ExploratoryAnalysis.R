@@ -1,0 +1,28 @@
+library(mice)
+library(ggplot2)
+
+# Load Data
+train = read.csv("train2016.csv")
+
+# Data Cleaning ##################################################################################
+
+# Replacing empty strings with NA in variables other than questions
+train$Income[train$Income == ""] = NA
+train$Gender[train$Gender == ""] = NA
+train$EducationLevel[train$EducationLevel == ""] = NA
+train$HouseholdStatus[train$HouseholdStatus == ""] = NA
+
+sum(is.na(train$Income))/nrow(train)          # 18.5%
+sum(is.na(train$Gender))/nrow(train)          # 2%
+sum(is.na(train$EducationLevel))/nrow(train)  # 15.5%
+sum(is.na(train$HouseholdStatus))/nrow(train) # 8%
+
+ggplot(data = train, mapping = aes(x = YOB)) + geom_bar()
+ggplot(data = train, mapping = aes(x = Gender)) + geom_bar()
+ggplot(data = train, mapping = aes(x = Income)) + geom_bar()
+ggplot(data = train, mapping = aes(x = HouseholdStatus)) + geom_bar()
+ggplot(data = train, mapping = aes(x = EducationLevel)) + geom_bar()
+
+ggplot(data = train, mapping = aes(x = Party)) + geom_bar()
+
+# Lots of young people single with no kids. Data is very much skewed
