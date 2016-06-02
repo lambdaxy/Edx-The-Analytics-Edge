@@ -3,3 +3,4 @@ TODO
 * Try imputting missing values with mice.
 * Check how many rows are complete
 * Clustering then predict based on clusters?
+* replace YOB outliers with NA before inputing with mice
