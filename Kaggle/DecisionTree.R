@@ -9,6 +9,7 @@ train = read.csv("train2016.csv")
 train[is.na(train)] = 1980
 test = read.csv("test2016.csv")
 test[is.na(test)] = 1980
+train = train[train$YOB >= 1900 & train$YOB <= 2003,]
 
 # Prepare Data
 library(caTools)
@@ -18,7 +19,7 @@ trainTrain = subset(train, spl==TRUE)
 trainTest = subset(train, spl==FALSE)
 
 # Model
-treeModel = rpart(Party ~ . -USER_ID, data = trainTrain, method = "class")
+treeModel = rpart(Party ~ . -USER_ID, data = trainTrain, method = "class", control = rpart.control(minsplit = 50))
 predictions = predict(treeModel, newdata = trainTest, type = "class")
 
 # Model with only non question variables
@@ -27,3 +28,4 @@ predictions = predict(treeModel, newdata = trainTest, type = "class")
 
 confusionMatrix = table(trainTest$Party, predictions)
 accuracy = (confusionMatrix[1,1] + confusionMatrix[2,2]) / nrow(trainTest)
+prp(treeModel)

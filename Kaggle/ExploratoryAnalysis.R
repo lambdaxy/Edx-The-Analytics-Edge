@@ -2,6 +2,7 @@ library(mice)
 library(ggplot2)
 library(rpart)
 library(mice)
+library(klaR)
 
 # Load Data
 train = read.csv("train2016.csv")
@@ -50,9 +51,12 @@ ggplot(data = train, mapping = aes(x = EducationLevel)) + geom_bar()
 ggplot(data = train, mapping = aes(x = Party)) + geom_bar()
 
 # Lots of young people single with no kids. Data is very much skewed
-# Some clear outlies in the YOB variable
+# Some clear outliers in the YOB variable
 
 table(train$Income,train$HouseholdStatus)
+
+kModesInout = train[,8:108]
+testKmodes = kmodes(data=kModesInout, 5)
 
 # Input Income with rpart
 miceMod = mice(train[, !names(train) %in% "Party"], method="rf")
