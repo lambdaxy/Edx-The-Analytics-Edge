@@ -19,7 +19,14 @@ trainTrain = subset(train, spl==TRUE)
 trainTest = subset(train, spl==FALSE)
 
 # Model
-rfModel = randomForest(Party ~ . -USER_ID, data = trainTrain, ntree=1000, nodesize = 200)
+rfModel = randomForest(Party ~ .-USER_ID, data = trainTrain, ntree=1000, nodesize = 200)
+predictions = predict(rfModel, newdata = trainTest)
+
+confusionMatrix = table(trainTest$Party, predictions)
+accuracy = (confusionMatrix[1,1] + confusionMatrix[2,2]) / nrow(trainTest)
+
+# using only important variables
+rfModel = randomForest(Party ~ YOB + Gender + Income + HouseholdStatus + EducationLevel + Q109244 + Q115611 + Q98197 + Q101163 + Q98869 + Q113181 -USER_ID, data = trainTrain, ntree=1000, nodesize = 200)
 predictions = predict(rfModel, newdata = trainTest)
 
 confusionMatrix = table(trainTest$Party, predictions)
