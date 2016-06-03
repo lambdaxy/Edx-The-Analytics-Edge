@@ -126,7 +126,9 @@ ggmap(chicago) + geom_point(data = LatLonCounts, aes(x = Long, y = Lat, color = 
 # We can also use the geom_tile geometry
 ggmap(chicago) + geom_tile(data = LatLonCounts, aes(x = Long, y = Lat, alpha = Freq), fill="red")
 
-
+LatLonCounts2 = LatLonCounts[LatLonCounts$Freq > 0,]
+ggmap(chicago) + geom_tile(data = LatLonCounts2, aes(x = Long, y = Lat, alpha = Freq), fill="red")
+length(LatLonCounts$Freq) - length(LatLonCounts2$Freq)
 
 # VIDEO 6 - Geographical Map on US
 
@@ -165,4 +167,5 @@ ggplot(murderMap, aes(x = long, y = lat, group = group, fill = MurderRate)) + ge
 # Redo the plot, removing any states with murder rates above 10:
 ggplot(murderMap, aes(x = long, y = lat, group = group, fill = MurderRate)) + geom_polygon(color = "black") + scale_fill_gradient(low = "black", high = "red", guide = "legend", limits = c(0,10))
 
+ggplot(murderMap, aes(x = long, y = lat, group = group, fill = GunOwnership)) + geom_polygon(color = "black") + scale_fill_gradient(low = "black", high = "red", guide = "legend")
 
