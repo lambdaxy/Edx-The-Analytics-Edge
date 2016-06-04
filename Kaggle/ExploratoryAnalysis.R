@@ -50,6 +50,12 @@ ggplot(data = train, mapping = aes(x = EducationLevel)) + geom_bar()
 
 ggplot(data = train, mapping = aes(x = Party)) + geom_bar()
 
+# Hand picked questions
+#109244 Are you a feminist? Yes,No
+#114152 Do you support a particular charitable cause with a lot of your time and/or money? Yes,No
+#115611 Do you personally own a gun? Yes,No
+#118232 Are you more of an idealist or a pragmatist? Idealist,Pragmatist
+
 # Lots of young people single with no kids. Data is very much skewed
 # Some clear outliers in the YOB variable
 
