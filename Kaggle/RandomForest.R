@@ -5,11 +5,8 @@ library(randomForest)
 # Lots of missing values (better as NA or they give information none the less?)
 #train = read.csv("train2016.csv", na.strings = "")
 #test = read.csv("test2016.csv", na.strings = "")
-train = read.csv("train2016.csv")
-train[is.na(train)] = 1980
-test = read.csv("test2016.csv")
-test[is.na(test)] = 1980
-train = train[train$YOB >= 1900 & train$YOB <= 2003,]
+train = read.csv("trainHandPickedQuestions.csv")
+test = read.csv("testHandPickedQuestions.csv")
 
 # Prepare Data
 library(caTools)
@@ -19,7 +16,7 @@ trainTrain = subset(train, spl==TRUE)
 trainTest = subset(train, spl==FALSE)
 
 # Model
-rfModel = randomForest(Party ~ .-USER_ID, data = trainTrain, ntree=1000, nodesize = 200)
+rfModel = randomForest(Party ~ . -USER_ID, data = trainTrain, ntree=500, minbucket = 50)
 predictions = predict(rfModel, newdata = trainTest)
 
 confusionMatrix = table(trainTest$Party, predictions)

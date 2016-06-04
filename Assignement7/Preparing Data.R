@@ -1,5 +1,7 @@
 library(mice)
 
+###### Prepare Inputed Data ###########################################################################
+
 train = read.csv("train2016.csv")
 test = read.csv("test2016.csv")
 
@@ -42,3 +44,13 @@ test$IHouseholdStatus = factor(miceTest$HouseholdStatus)
 write.csv(train, file = "trainImputedDemographics.csv")
 write.csv(test, file = "testImputedDemographics.csv")
 
+###### Prepare hand picked subset ###########################################################################
+
+train = read.csv("trainImputedDemographics.csv")
+test = read.csv("testImputedDemographics.csv")
+TrainNotInputed = subset(train, select = -c(IIncome, IGender, IHouseholdStatus, IEducationLevel))
+trainHandPickedQuestions = subset(TrainNotInputed, select = c(USER_ID, Party, Income, Gender, HouseholdStatus, EducationLevel, Q109244, Q114152, Q115611, Q118232, Q98197, Q116953, Q117193))
+TestNotInputed = subset(test, select = -c(IIncome, IGender, IHouseholdStatus, IEducationLevel))
+testHandPickedQuestions = subset(TestNotInputed, select = c(USER_ID, Income, Gender, HouseholdStatus, EducationLevel, Q109244, Q114152, Q115611, Q118232, Q98197, Q116953, Q117193))
+write.csv(trainHandPickedQuestions, file = "trainHandPickedQuestions.csv", row.names = FALSE)
+write.csv(testHandPickedQuestions, file = "testHandPickedQuestions.csv", row.names = FALSE)
