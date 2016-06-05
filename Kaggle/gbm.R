@@ -1,12 +1,23 @@
 library(caret)
 
-train = read.csv("train2016.csv")
-train = subset(x = train, subset = train$YOB >= 1900 & train$YOB <= 2003) 
+#train = read.csv("train2016.csv")
+#train = subset(x = train, subset = train$YOB >= 1900 & train$YOB <= 2003) 
+train = read.csv("trainImputedDemographics.csv")
+train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
+#train = read.csv("trainHandPickedQuestions.csv")
+train = read.csv("trainImputedDemographicsWithIndicator.csv")
+train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
 
 set.seed(998)
 inTraining <- createDataPartition(train$Party, p = .75, list = FALSE)
 training <- train[ inTraining,]
 testing  <- train[-inTraining,]
+
+#dummies <- dummyVars(Party ~ . , data = training)
+#trainingDummies = data.frame(predict(dummies, newdata = training))
+#trainingDummies$Party = training$Party
+#testingDummies = data.frame(predict(dummies, newdata = testing))
+#testingDummies$Party = testing$Party
 
 # CV tuning
 fitControl <- trainControl(## 10-fold CV

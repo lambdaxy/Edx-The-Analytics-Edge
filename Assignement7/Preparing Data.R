@@ -40,9 +40,27 @@ test$IGender = factor(miceTest$Gender)
 test$IEducationLevel = factor(miceTest$EducationLevel)
 test$IHouseholdStatus = factor(miceTest$HouseholdStatus)
 
+train$HasIncome[train$Income == ""] = 0
+train$HasIncome[train$Income != ""] = 1
+train$HasGender[train$Gender == ""] = 0
+train$HasGender[train$Gender != ""] = 1
+train$HasHouseholdStatus[train$HouseholdStatus == ""] = 0
+train$HasHouseholdStatus[train$HouseholdStatus != ""] = 1
+train$HasEducationLevel[train$EducationLevel == ""] = 0
+train$HasEducationLevel[train$EducationLevel != ""] = 1
+
+test$HasIncome[test$Income == ""] = 0
+test$HasIncome[test$Income != ""] = 1
+test$HasGender[test$Gender == ""] = 0
+test$HasGender[test$Gender != ""] = 1
+test$HasHouseholdStatus[test$HouseholdStatus == ""] = 0
+test$HasHouseholdStatus[test$HouseholdStatus != ""] = 1
+test$HasEducationLevel[test$EducationLevel == ""] = 0
+test$HasEducationLevel[test$EducationLevel != ""] = 1
+
 # Save data for future use
-write.csv(train, file = "trainImputedDemographics.csv")
-write.csv(test, file = "testImputedDemographics.csv")
+write.csv(train, file = "trainImputedDemographicsWithIndicator.csv")
+write.csv(test, file = "testImputedDemographicsWithIndicator.csv")
 
 ###### Prepare hand picked subset ###########################################################################
 
