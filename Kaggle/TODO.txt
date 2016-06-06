@@ -1,7 +1,7 @@
 TODO
 
-* Try imputting missing values with mice.
+* Try using mice differently (my inputing does not improve much)
 * Check how many rows are complete
 * Clustering then predict based on clusters?
-* replace YOB outliers with NA before inputing with mice
 * run mice on combined test and train? Seems that Gender imputation could improve results but not imputation over all demographic variables...
+* I should inpute those YOB NA in training instead of removing them since I will inpute them in the submission set. (outliers can still be removed)
