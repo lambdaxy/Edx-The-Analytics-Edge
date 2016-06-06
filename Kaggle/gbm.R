@@ -7,6 +7,9 @@ train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLeve
 #train = read.csv("trainHandPickedQuestions.csv")
 train = read.csv("trainImputedDemographicsWithIndicator.csv")
 train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
+submissionTest = read.csv("testImputedDemographicsWithIndicator.csv")
+submissionTest = subset(submissionTest, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
+submissionTest$YOB[is.na(submissionTest$YOB)] = 1980
 
 set.seed(998)
 inTraining <- createDataPartition(train$Party, p = .75, list = FALSE)
@@ -76,3 +79,8 @@ predictions = predict(gbmFit3, newdata = testing, type = "prob")
 confusionMatrix = table(testing$Party,predictions[,2] > 0.5)
 accuracy = (confusionMatrix[1] + confusionMatrix[4]) / nrow(testing)
 
+# submission
+threshold = 0.5
+predictionLabels = as.factor(ifelse(predictions[,2]<threshold, "Democrat", "Republican"))
+MySubmission = data.frame(USER_ID = submissionTest$USER_ID, PREDICTIONS = predictionLabels)
+write.csv(MySubmission, "gbm.csv", row.names=FALSE)
