@@ -4,12 +4,12 @@ library(caret)
 #train = subset(x = train, subset = train$YOB >= 1900 & train$YOB <= 2003) 
 train = read.csv("trainImputedDemographics.csv")
 train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
-#train = read.csv("trainHandPickedQuestions.csv")
+train = read.csv("trainHandPickedQuestions.csv")
 train = read.csv("trainImputedDemographicsWithIndicator.csv")
 train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
-submissionTest = read.csv("testImputedDemographicsWithIndicator.csv")
-submissionTest = subset(submissionTest, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
-submissionTest$YOB[is.na(submissionTest$YOB)] = 1980
+#submissionTest = read.csv("testImputedDemographicsWithIndicator.csv")
+#submissionTest = subset(submissionTest, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
+#submissionTest$YOB[is.na(submissionTest$YOB)] = 1980
 
 set.seed(998)
 inTraining <- createDataPartition(train$Party, p = .75, list = FALSE)
@@ -42,7 +42,7 @@ accuracy = (confusionMatrix[1] + confusionMatrix[4]) / nrow(testing)
 # No tuning
 fitControl <- trainControl(method = "none", classProbs = TRUE)
 set.seed(825)
-gbmFit4 <- train(Party ~ . -USER_ID, data = training,
+gbmFit4 <- train(Party ~ . -USER_ID -X, data = training,
                  method = "gbm",
                  trControl = fitControl,
                  verbose = FALSE,

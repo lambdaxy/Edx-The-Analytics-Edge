@@ -75,3 +75,8 @@ threshold = 0.5
 PredTestLabels = as.factor(ifelse(PredTest<threshold, "Democrat", "Republican"))
 MySubmission = data.frame(USER_ID = test$USER_ID, PREDICTIONS = PredTestLabels)
 write.csv(MySubmission, "SubmissionSimpleLog.csv", row.names=FALSE)
+
+# Pray or meditate question
+Q98197
+Q113181
+table(train$Q98197,train$Q113181)
