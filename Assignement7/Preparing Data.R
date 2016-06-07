@@ -11,7 +11,19 @@ train = subset(x = train, subset = train$YOB >= 1900 & train$YOB <= 2003) # drop
 # Combine train and test for imputing
 trainTest = rbind(subset(train, select=-c(Party)),test)
 
-# Setting demographics to NA
+# Combine Religion Question
+trainTest$Q98197113181[trainTest$Q98197 == "Yes" & trainTest$Q113181 == "Yes"] = "Yes"
+trainTest$Q98197113181[trainTest$Q98197 == "No" & trainTest$Q113181 == "No"] = "No"
+trainTest$Q98197113181[trainTest$Q98197 == "Yes" & trainTest$Q113181 == ""] = "Yes"
+trainTest$Q98197113181[trainTest$Q98197 == "" & trainTest$Q113181 == "Yes"] = "Yes"
+trainTest$Q98197113181[trainTest$Q98197 == "No" & trainTest$Q113181 == ""] = "No"
+trainTest$Q98197113181[trainTest$Q98197 == "" & trainTest$Q113181 == "No"] = "No"
+trainTest$Q98197113181[trainTest$Q98197 == "No" & trainTest$Q113181 == "Yes"] = "WTF"
+trainTest$Q98197113181[trainTest$Q98197 == "Yes" & trainTest$Q113181 == "No"] = "WTF"
+trainTest$Q98197113181[trainTest$Q98197 == "" & trainTest$Q113181 == ""] = ""
+trainTest$Q98197113181 = as.factor(trainTest$Q98197113181)
+
+# Setting demographics to NA (Not sure it is usefull)
 trainTest$Income[trainTest$Income == ""] = NA
 trainTest$Income = factor(trainTest$Income)
 trainTest$Gender[trainTest$Gender == ""] = NA
@@ -34,11 +46,13 @@ train$IIncome = factor(miceTrain$Income)
 train$IGender = factor(miceTrain$Gender)
 train$IEducationLevel = factor(miceTrain$EducationLevel)
 train$IHouseholdStatus = factor(miceTrain$HouseholdStatus)
+train$Q98197113181 = miceTrain$Q98197113181
 
 test$IIncome = factor(miceTest$Income)
 test$IGender = factor(miceTest$Gender)
 test$IEducationLevel = factor(miceTest$EducationLevel)
 test$IHouseholdStatus = factor(miceTest$HouseholdStatus)
+test$Q98197113181 = miceTest$Q98197113181
 
 train$HasIncome[train$Income == ""] = 0
 train$HasIncome[train$Income != ""] = 1
@@ -59,8 +73,8 @@ test$HasEducationLevel[test$EducationLevel == ""] = 0
 test$HasEducationLevel[test$EducationLevel != ""] = 1
 
 # Save data for future use
-write.csv(train, file = "trainImputedDemographicsWithIndicator.csv")
-write.csv(test, file = "testImputedDemographicsWithIndicator.csv")
+write.csv(train, file = "trainImputedDemographicsWithIndicator.csv", row.names = FALSE)
+write.csv(test, file = "testImputedDemographicsWithIndicator.csv", row.names = FALSE)
 
 ###### Prepare hand picked subset ###########################################################################
 

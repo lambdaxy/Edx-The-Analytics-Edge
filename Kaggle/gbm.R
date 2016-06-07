@@ -6,10 +6,11 @@ train = read.csv("trainImputedDemographics.csv")
 train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
 train = read.csv("trainHandPickedQuestions.csv")
 train = read.csv("trainImputedDemographicsWithIndicator.csv")
-train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
-#submissionTest = read.csv("testImputedDemographicsWithIndicator.csv")
-#submissionTest = subset(submissionTest, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
-#submissionTest$YOB[is.na(submissionTest$YOB)] = 1980
+train = subset(train, select = -c(IIncome, IGender, IHouseholdStatus, IEducationLevel))
+train = subset(train, select = -c(Q98197, Q113181))
+submissionTest = read.csv("testImputedDemographicsWithIndicator.csv")
+submissionTest = subset(submissionTest, select = -c(IIncome, IGender, IHouseholdStatus, IEducationLevel))
+submissionTest$YOB[is.na(submissionTest$YOB)] = 1980
 
 set.seed(998)
 inTraining <- createDataPartition(train$Party, p = .75, list = FALSE)
@@ -42,16 +43,16 @@ accuracy = (confusionMatrix[1] + confusionMatrix[4]) / nrow(testing)
 # No tuning
 fitControl <- trainControl(method = "none", classProbs = TRUE)
 set.seed(825)
-gbmFit4 <- train(Party ~ . -USER_ID -X, data = training,
+gbmFit4 <- train(Party ~ . -USER_ID, data = training,
                  method = "gbm",
                  trControl = fitControl,
                  verbose = FALSE,
                  ## Only a single model can be passed to the
                  ## function when no resampling is used:
-                 tuneGrid = data.frame(interaction.depth = 4,
-                                       n.trees = 100,
+                 tuneGrid = data.frame(interaction.depth = 9,
+                                       n.trees = 75,
                                        shrinkage = .1,
-                                       n.minobsinnode = 20))
+                                       n.minobsinnode = 50))
 predictions = predict(gbmFit4, newdata = testing, type = "prob")
 confusionMatrix = table(testing$Party,predictions[,2] > 0.5)
 accuracy = (confusionMatrix[1] + confusionMatrix[4]) / nrow(testing)
