@@ -2,6 +2,8 @@ library(caret)
 
 #train = read.csv("train2016.csv")
 #train = subset(x = train, subset = train$YOB >= 1900 & train$YOB <= 2003) 
+train = read.csv("trainImputedDemographicsWithIndicator.csv")
+train = subset(train, select = c(Income, Gender, HouseholdStatus, EducationLevel, YOB, Party, USER_ID))
 train = read.csv("trainImputedDemographics.csv")
 train = subset(train, select = -c(Income, Gender, HouseholdStatus, EducationLevel))
 train = read.csv("trainHandPickedQuestions.csv")
