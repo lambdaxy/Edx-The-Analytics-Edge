@@ -5,3 +5,5 @@ TODO
 * Clustering then predict based on clusters?
 * run mice on combined test and train? Seems that Gender imputation could improve results but not imputation over all demographic variables...
 * I should inpute those YOB NA in training instead of removing them since I will inpute them in the submission set. (outliers can still be removed)
+* try glmnet
+*try script data preparation downloaded
