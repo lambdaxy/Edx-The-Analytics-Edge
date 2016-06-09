@@ -3,8 +3,8 @@ train <- read.csv("train2016.csv", na.strings = c("", "NA"))
 test <- read.csv("test2016.csv", na.strings = c("", "NA"))
 
 # Baseline training set accuracy: 0.5299928
-table(train_label)
-(2951)/length(train_label)
+#table(train_label)
+#(2951)/length(train_label)
 
 # Looking at YOBs
 mean(train$YOB, na.rm=TRUE)
